@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+        img {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<img src="dieqi.jpg" id="img">
+<canvas width="500" height="300" id="canvas"></canvas>
+<script src="gauss.js"></script>
+<script>
+    var img = document.getElementById('img');
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0, 550, 300);
+        var data = ctx.getImageData(0, 0, 550, 300); //  拷贝画布指定矩形的像素数据（xy长款）
+        var emptyData = ctx.createImageData(550, 300); //  创建画布指定宽，高
+        emptyData = gaussBlur(data);
+        ctx.putImageData(emptyData, 0, 0); //  复制画布上指定矩形的像素数据，然后通过putImageData()将图像数据放回画布
+    }
+    var timo = (function(){
+        var inittimo;
+        function init(){
+            /*定义单例*/
+            return {
+                dead: function(){
+                    console.log("Public dead")
+                },
+                word: "提莫队长正在送命"
+            }
+        }
+        return {
+            getinit: function(){
+                if(!inittimo){
+                    inittimo = init()
+                }
+                return inittimo;
+            }
+        }
+    })();
+    /*调用公有的方法来获取实例*/
+    timo.getinit().dead()
+</script>
+</body>
+</html>

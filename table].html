@@ -1,0 +1,140 @@
+单例模式：
+定义：单例模式之所以这么叫，是因为它限制一个类只能有一个实例化对象。
+
+实现方法：判断实例是否存在，如果存在则直接返回，如果不存在就创建了再返回。（确保一个类只有一个实例对象）
+
+特点： 命名空间提供者，从全局命名空间里提供一个唯一的访问点来访问该对象
+
+实现单例的方式
+一丶对象字面量
+var hero = {
+
+name : "timo"
+
+sex : "male"
+
+method: function(){
+
+console.log("提莫队长正在送命")
+
+}
+
+}
+二丶添加私有成员和方法，然后使用闭包在内部封装这些变量
+var hero = function(){
+
+/*私有变量和方法*/
+
+var word = '提莫队长正在送命'
+
+function tell(){
+
+console.log(word)
+
+}
+
+公有变量和方法
+
+
+return{
+
+told: function(){
+
+tell();
+
+},
+
+dead: "Public string"
+
+}
+
+}
+
+
+var hero = hero()
+
+hero.told() //队长正在送命
+
+console.log(hero.dead) //Public string
+三丶构造函数初始化=>为了节约资源
+var timo = (function(){
+
+var inittimo;
+
+function init(){
+
+/*定义单例*/
+
+return {
+
+dead: function(){
+
+console.log("Public dead")
+
+}
+
+word: "提莫队长正在送命"
+
+}
+
+}
+
+return {
+
+getinit: function(){
+
+if(!inittimo){
+
+inittimo = init()
+
+}
+
+return inittimo;
+
+}
+
+}
+
+})();
+
+/*调用公有的方法来获取实例*/
+单例模式的使用场景
+系统间各种模式的通信协调上
+
+var SingletonTester = (function () {
+
+//参数：传递给单例的一个参数集合
+function Singleton(args) {
+
+//设置args变量为接收的参数或者为空（如果没有提供的话）
+var args = args || {};
+//设置name参数
+this.name = 'SingletonTester';
+//设置pointX的值
+this.pointX = args.pointX || 6; //从接收的参数里获取，或者设置为默认值
+//设置pointY的值
+this.pointY = args.pointY || 10;
+
+}
+
+//实例容器
+var instance;
+
+var _static = {
+name: 'SingletonTester',
+
+//获取实例的方法
+//返回Singleton的实例
+getInstance: function (args) {
+if (instance === undefined) {
+instance = new Singleton(args);
+}
+return instance;
+}
+};
+return _static;
+})();
+
+var singletonTest = SingletonTester.getInstance({ pointX: 5 });
+console.log(singletonTest.pointX); // 输出 5
+综上所述，不管是变量，对象还是构造函数

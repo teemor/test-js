@@ -1,0 +1,47 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+    </style>
+    <script type="text/javascript">
+        //  全选
+        function selectAll(obj){
+            for (var i=0;i<obj.elements.length;i++){
+                if (obj.elements[i].type == "checkbox"){
+                    if(!obj.elements[i].checked){
+                        obj.elements[0].checked = true
+                        obj.elements[i].checked = true
+                    }else{
+                        obj.elements[0].checked = false
+                        obj.elements[i].checked = false
+                    }
+
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<form name="check">
+    <ul>
+        <li>
+            <input type="checkbox" onclick="selectAll(document.check)" id="c">
+            <label for="c">全选</label>
+        </li>
+        <li>
+            <input type="checkbox" id="a">
+            <label for="a">a</label>
+        </li>
+        <li>
+            <input type="checkbox" id="b">
+            <label for="b">b</label>
+        </li>
+    </ul>
+</form>
+
+</body>
+<script>
+
+</script>
+</html>

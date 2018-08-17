@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Image Process -- Gaussian Blur</title>
+    <style>
+        .bg {
+            /*background-image:url(dieqi.jpg);*/
+            /*-moz-background-size: 100% 100%; !*  Firefox 3.6 *!*/
+            /*-o-background-size: 100% 100%;!* Opera 9.5 *!*/
+            /*-webkit-background-size: 100% 100%;!* Safari 3.0 *!*/
+            /*background-size: 100% 100%;!*  Firefox 4.0 and other CSS3-compliant browsers *!*/
+            /*-moz-border-image: url(dieqi.jpg) 0; !* Firefox 3.5 *!*/
+            /*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='dieqi.jpg');!* for < ie9 *!*/
+        }
+    </style>
+</head>
+<body>
+        <canvas id="logo"></canvas>
+    <script>
+        blur(document.getElementById('logo'),'http://s.segmentfault.com/img/logo.png',2);
+        function blur(element, src, strength) {
+            var image = new Image();
+            image.onload = function (e) {
+                var canvas = document.createElement('canvas')
+                var context = canvas.getContext('2d')
+
+                canvas.width = this.width;
+                canvas.height = this.height;
+
+                context.drawImage(this, 0, 0)
+
+                context.globalAlpha = 0.5
+                for(var y = -strength; y <= strength; y += 2){
+                    for (var x = -strength; x <= strength; x+=2){
+                        context.drawImage(canvas, x, y)
+                    }
+                }
+                context.globalAlpha = 1;
+                console.log(canvas.toDataURL())
+//                element.style.backgroundImage = 'url('+canvas.toDataURL()+')';
+            }
+            image.src = src
+        }
+    </script>
+</body>
+</html>

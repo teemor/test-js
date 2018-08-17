@@ -1,0 +1,61 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{text-align: center;background: #ffffff}
+    </style>
+</head>
+<body>
+
+</body>
+<script>
+    /**/
+   window.onload=function(){
+      console.log(this.unique(9))
+   };
+    function unique(num) {
+    let arr1 = new Array(4);
+    let newArr = this.num();
+
+        for (let i=0;i<arr1.length;i++){
+            arr1[i] = new Array(3);
+            for (let j=0;j<arr1[i].length;j++){
+                arr1[i][j]=newArr[i]
+            }
+        }
+
+    console.log(arr1);
+    let arr = [
+        [2,   4,  8,  9],
+        [10, 13, 15, 21],
+        [23, 31, 33, 51]
+    ];
+    for(let i =0;i<arr.length;i++){
+        if (arr[i].indexOf(num)===-1){
+            console.log(2);
+            return false
+        }
+        for (let j=0;j<arr[i].length;j++){
+            if (arr[i][j]===num){
+               return true
+           }
+       }
+    }
+}
+
+function num() {
+    let arr = [];
+    for (let i=0;i<13;i++){
+        let c =(Math.random()*45).toString().split('.')[0];
+        if(arr.indexOf(c)==-1){
+            arr.push(c)
+        }
+    }
+    return arr.sort(b)
+}
+function b(f,g) {
+    return f-g;
+}
+</script>
+</html>

@@ -1,0 +1,32 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+    div{width: 100px;height:100px;background:red;background-image: linear-gradient(72deg, red, #f06d06);
+    /* "Invalid", but works in 6-8 */
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=red, endColorstr=#f06d06);
+    /* Valid, works in 8-9 */
+    -ms-filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=red, endColorstr=#f06d06);}
+    </style>
+    <!--[if IE 6]>
+    这段文字只在IE6浏览器显示
+    <![endif]-->
+</head>
+<body>
+<div>
+    fwerwerr
+</div>
+</body>
+<script>
+    /**/
+    function sum(x,y) {
+        //  隐式全局变量
+        result = x + y
+        return result
+    }
+    console.log(sum(1,5))
+    /*链分配*/
+
+</script>
+</html>

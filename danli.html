@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    // 单例1
+    var h = (function () {
+        function x(a) {
+            var a = a || {}
+            this.name = 'timo'
+            this.sex = 'male'
+            this.pX = a.pX || 6
+            this.pY = a.pY || 10
+        }
+        var test
+        var _static = {
+            name: 'h',
+            gettest: function (a) {
+                if (test === undefined){
+                    test = new x(a)
+                }
+                return test
+            }
+        }
+        return _static
+    })()
+    var hhh = h.gettest({pX: 5})
+    console.log(hhh.pX)
+    // 单例2
+    function se() {
+        //  缓存实例
+        var ins;
+        //  重新构造函数
+        se = function u() {
+           return ins
+        }
+        //  后期处理原型属性
+        se.prototype = this
+        //  实例
+        ins = new se()
+        //  重设构造函数指针
+        ins.constructor= u;
+        //  其他功能
+        ins.start_time = 0;
+        ins.bang = "Big"
+
+        return ins
+    }
+</script>
+</body>
+</html>
