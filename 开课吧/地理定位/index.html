@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <script>
+            // 第一个函数是定位成功后才执行的函数（参数p这个对象中有经纬度的属性）
+            // 第二个函数是定位失败后才执行的函数（通过参数msg可以获取定位失败的信息）
+            window.navigator.geolocation.getCurrentPosition(function(p){
+                console.log(p.coords.latitude);//纬度
+                console.log(p.coords.longitude);//经度
+            },function(msg){
+
+            })
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
