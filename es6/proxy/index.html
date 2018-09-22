@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    var person = {
+      name: "张三"
+    };
+    // 拦截某个属性的读取操作，可以接受三个参数，依次为目标对象、属性名和proxy实例本身（严格地说，是操作行为所针对的对象），其中最后一个参数可选
+    var proxy = new Proxy(person, {
+      get: function (target, property) { //目标对象，属性名
+        if (property in target) {
+          return target[property];
+        } else {
+          throw new ReferenceError("")
+        }
+      }
+    });
+
+    proxy.name
+    proxy.age
+
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

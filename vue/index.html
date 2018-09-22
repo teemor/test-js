@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    import axios from 'axios';
+    const api = new Proxy({}, {
+      get(target, prop) {
+        const method = /^[a-z]+/.exec(prop)[0];
+        const path = '/' + prop
+          .substring(method.length)
+          .replace(/([a-z])([A-Z])/g, '$1/$2')
+          .replace(/\$/g, '/$/')
+          .toLowerCase();
+        return (...args) => { // <------ 返回动态构造的函数！
+          const url = path.replace(/\$/g, () => args.shift());
+          const options = args.shift() || {};
+          console.log('Requesting: ', method, url, options);
+          return axios({ method, url, ...options });
+        }
+      }
+    });</script>
+</head>
+
+<body>
+
+</body>
+
+</html>

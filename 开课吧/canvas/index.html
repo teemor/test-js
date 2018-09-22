@@ -1,10 +1,78 @@
 <html>
     <head>
+        <style>
+            canvas{
+                border: 1px solid red
+            }
+        </style>
         <script>
-            W
+            // canvas画布，用来画图
         </script>
     </head>
     <body>
+        <canvas width="500" height="600"></canvas>
+        <script>
+            // 绘制一条直线
+            // 先获取这个画布
+            var c = document.querySelector("canvas");
+            // 获取绘制图像的对象
+            var ctx = c.getContext("2d");
+            // 开始的坐标
+            ctx.moveTo(100,50);
+            // 结束的坐标
+            ctx.lineTo(400,50);
+            ctx.strokeStyle="red"
+            // 绘制
+            ctx.stroke();
+            ctx.beginPath();//重置路径
 
+
+             // 开始的坐标
+             ctx.moveTo(100,100);
+            // 结束的坐标
+            ctx.lineTo(400,100);
+            ctx.strokeStyle="green"
+            // 绘制
+            ctx.stroke();
+            ctx.beginPath(); //　重置路径
+
+            ctx.moveTo(250,250);
+            ctx.lineTo(300,300);
+             ctx.lineTo(250,350);
+             ctx.lineJoin="round"
+             ctx.lineCap="round"
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = "green";
+            ctx.stroke();
+            ctx.beginPath();
+
+            ctx.moveTo(100,50)
+            ctx.lineTo(100,200)
+            ctx.lineTo(300,200)
+            ctx.closePath();//　闭合路径，帮助我们封口
+            ctx.stroke();
+            ctx.beginPath(); //　重置路径
+
+            //创建线性渐变方案
+            //开始的横纵坐标，结束的横纵坐标
+            let lgd = ctx.createLinearGradient(100,100,400,100)
+            // 添加渐变的颜色,红色渐变到绿色
+            // 0到１之间的小数形式
+            lgd.addColorStop(0,"red");
+            lgd.addColorStop(0.2,"green");
+            lgd.addColorStop(0.5,"blue");
+            lgd.addColorStop(0.9,"yellow");
+            // 设置渐变的方案
+            ctx.strokeStyle = lgd;
+            // 绘制直线
+            ctx.moveTo(100,100);
+            ctx.lineTo(400,100);
+            ctx.lineWidth = 40;
+            ctx.stroke();
+            ctx.beginPath(); //　重置路径
+
+            // 创建线性渐变
+            var rgd = ctx.c
+        </script>
     </body>
 </html>

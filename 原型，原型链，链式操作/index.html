@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    // 原型、原型链、原型链继承
+    function Ele(id){
+      this.ele = document.getElementById(id)
+    }
+    Ele.prototype.html = function(val){
+      let ele = this.ele
+      if(val){
+        ele.innerHTML = val
+        return this
+      }else{
+        return ele.innerHTML
+      }
+    }
+    Ele.prototype.on = function(type,fn){
+      let ele = this.ele
+      ele.addEventListener(type,fn)
+      return this
+    }
+    let div = new Ele('div')
+    div.html('<p>hehehe</p>').on('click',function(){
+      alert('heheh')
+    }).html('<div>23333</div>')
+  </script>
+</head>
+<body>
+  
+</body>
+</html>
