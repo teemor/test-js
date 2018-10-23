@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./promit.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<style>
+    .box {
+        width: 300px;
+    }
+    .el-input__inner {
+        width: 280px;
+    }
+    .el-popover,.data {
+        width: 320px;
+    }
+    .data {
+    }
+    .qwe {
+        display : flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .qwe div {
+        cursor: pointer;
+        width: 100px;
+        text-align: center;
+        line-height: 30px;
+    }
+    .span::before {
+        content: "-";
+    }
+    .vv-box {
+        position: relative;
+        width: auto;
+        display: inline;
+        color: #5b5b5b;
+        font-size: 12px;
+        padding-left: 20px;
+    }
+    .vv-box span {
+        cursor: pointer;
+        position: relative;
+        line-height: 25px;
+    }
+    .vv {
+        position: absolute;
+        right: -20px;
+        top: 2px;
+    }
+    .tags {
+        width: 280px;
+        height: 30px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 1px solid #e7e7e7;
+    }
+    .tags:hover {
+        border-color: #4cd964;
+    }
+    .box {
+        position: relative;
+    }
+    .select-box {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .el-tag {
+        background-color: #f9f9f9;
+        border-color: #d4d3d8;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 0;
+        color: #5b5b5b;
+        margin: 4px 0 0 4px;
+        padding: 0 8px;
+    }
+    .el-tag  .el-icon-error {
+        padding: 0 0 0 8px;
+        cursor: pointer;
+    }
+    .father {
+        position: relative;
+    }
+
+    /****/
+    .select-width,.select-width.el-select-dropdown__wrap {
+        width: 290px !important;
+        padding-bottom: 10px;
+    }
+    .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+        color: #606266;
+        font-weight: normal;
+    }
+    .el-select-dropdown__item {
+        width: auto !important;
+        font-size: 12px;
+    }
+    .el-select-dropdown__item::after {
+        color: #ffffff !important;
+    }
+    .department-select {
+        display: inline-block;
+        position: relative;
+    }
+    .department-select .el-select {
+        width: 280px;
+    }
+    .select {
+        width: 320px;
+    }
+    .department-select .el-input__inner, .department-select .el-input__icon {
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+    .department-select .el-tag__close {
+        margin-right: 5px !important;
+    }
+    .el-select .el-tag__close.el-icon-close {
+        top: -2px !important;
+        background-color: #999999;
+    }
+    .department-select .point {
+        position: absolute;
+        width: 30px;
+        height: 10px;
+        background: #ffffff;
+        right: 3px;
+        top: 50%;
+        margin-top: -5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .department-select .el-select__tags span{
+        overflow: hidden !important;
+        height: 20px !important;
+        line-height: 20px !important;
+    }
+    .department-select .el-select__tags span span {
+        float: left;
+    }
+    .department-select .el-input__inner {
+        border-radius: 0;
+        border-color: #b1b1b1;
+    }
+    .department-select .el-select .el-input.is-focus .el-input__inner,.department-select .el-select .el-input__inner:focus {
+        border-color: #b1b1b1 !important;
+    }
+    .select-box .title {
+        font-size: 12px;
+        padding: 8px 0 0 10px;
+    }
+    .select-box .select-data {
+        min-height: 40px;
+    }
+    .select-box .select-data div {
+        padding: 10px 10px;
+    }
+    .select-box .el-icon-error {
+        position: absolute;
+        right: -20px;
+        top: 3px;
+        color: #999999;
+        cursor: pointer;
+    }
+    .select-box .add-department {
+        color: #21b08d;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        padding: 10px 0;
+    }
+    ul,li {
+        list-style: none;
+        padding: 0;
+    }
+    /* 设置部门选择项间距 */
+    .spacing {
+        min-width: 52px;
+        float: left;
+        padding: 6px 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .spacing:hover {
+        background-color: #f5f7fa;
+    }
+    /*.select-value {*/
+        /*padding: 10px 0 8px 0;*/
+    /*}*/
+    .el-select-dropdown__item {
+        float: left;
+        text-align: center !important;
+        padding: 0 0 0 0  !important;
+        margin: 0 2px 0 10px  !important;
+        line-height: 30px !important;
+        height: 30px;
+    }
+    .el-select-dropdown__item:nth-child(1) {
+        margin-left: 0 !important;
+    }
+    .el-select-dropdown__item div {
+        min-width: 62px;
+    }
+    /*.select-value .el-select-dropdown__item div {*/
+        /*width: 100%;*/
+    /*}*/
+    .demplate-pad {
+        padding-bottom: 8px;
+    }
+    .department-select .round-box {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #12ab8c;
+    }
+    .el-select__tags {
+        max-width: 245px !important;
+    }
+    .select-width .el-scrollbar__wrap {
+        width: 100%;
+        overflow-y: hidden !important;
+    }
+    .select-width .el-select-dropdown__wrap {
+        height: 100%;
+    }
+    .select-width .plus {
+        font-size: 17px !important;
+    }
+    .department-select .el-tag {
+        padding: 0 4px;
+        border-color: #d0d4da;
+        margin: 0 0 1px 4px;
+        background-color: #f7f7f7;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="box">
+        <div class="department-select">
+            <el-select v-model="valueData" placeholder="请选择部门" multiple popper-class="select-width" @remove-tag="deleteTag">
+                <div class="select-box">
+                    <div class="title">已选：</div>
+                    <div class="select-box" style="width: 100%; min-height: 20px;padding-top: 15px">
+                        <span v-for="(oitem, findex) in value" class="vv-box" :key="findex">
+                            <span v-for="(txt, oindex) in oitem" :class="oindex> 0?'span': ''" @click="goBack(findex,oindex)" :key="txt.value">
+                            {{txt.value}}
+                                <i class="el-icon-error vv" v-if="oindex === oitem.length -1" @click.stop="clear(findex)"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="demplate-pad">
+                        <div @click="selectDepartment" style="padding: 0 10px 20px 0;text-align: center;border-bottom: 1px solid #e7e7e7; color: #12ab8d;font-size: 12px;cursor: pointer;">
+                            <span class="plus">+</span><span>选择部门</span>
+                        </div>
+                    </div>
+                </div>
+                <el-option v-for="(item, index) in arr.length > 0 && istrue ? arr[arr.length-1].children  : departmentList"
+                           :key="item.value"
+                           :label="item.value"
+                           :value="item.value">
+                    <div @click="change(item,item.value,index)">{{item.value}}</div>
+                </el-option>
+            </el-select>
+            <div class="point el-input__suffix" v-if="tagWidth > 240">
+                <span class="round-box" v-for="item in 3" :key="item"></span>
+            </div>
+        </div>
+    </div>
+    <!--正编写的-->
+    <!--<div class="original-box">-->
+        <!--<div class="original-input-box">-->
+            <!--&lt;!&ndash;<div class="original-input original-input__suffix">&ndash;&gt;-->
+                <!--<input type="text" placeholder="请输入部门" class="original-el-input__inner">-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<div class="original-input__suffix">-->
+                <!--<span class="original-input__suffix-inner">-->
+                    <!--<i slot="suffix" class="el-select__caret original-input__icon el-icon-arrow-up is-reverse"></i>-->
+                <!--</span>-->
+            <!--</div>-->
+            <!--<div class="original-down" v-if="">-->
+                <!--<div class="original-down-item">-->
+                    <!--<span class="popper_arrow"></span>-->
+                    <!--<span class="popper_fool"></span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            arr: [],
+            value: [],
+            num: 0,
+            departmentList: [ // 部门数据
+                {
+                    value: '置业部',
+                    label: '置业部',
+                    children: [
+                        {
+                            value: '唐山市区',
+                            children: [
+                                {
+                                    value: 'A区',
+                                    children: [
+                                        {
+                                            value: '新一中店'
+                                        }
+                                    ]
+                                },
+                                {
+                                    value: 'B区',
+                                    children: [
+                                        {
+                                            value: '新二中店'
+                                        }
+                                    ]
+                                },
+                                {
+                                    value: 'C区',
+                                    children: [
+                                        {
+                                            value: '新三中店'
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '人资部',
+                    label: '人资部',
+                    children: [
+                        { value: '滦县区'},
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '权证部',
+                    label: '权证部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区'}
+                    ]
+                },
+                {
+                    value: '行政部',
+                    label: '行政部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '网络部',
+                    label: '网络部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '宣传部',
+                    label: '宣传部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '市场部',
+                    label: '市场部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '培训部',
+                    label: '培训部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                }
+            ],
+            istrue: false,
+            all: [],
+            selectArr: [],
+            taglabel: '',
+            tagWidth: 0
+        },
+        computed: {
+            valueData () {
+                let computeArr
+                    computeArr = this.selectArr.map((item) => { return item })
+           
+            
+                // 拿到选项的宽度出现三个绿色小点计算
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.tagWidth = this.taglabel.offsetWidth
+                    }, 100)
+                })
+                // 返回用户选择的新数组
+                return computeArr
+            }
+        },
+        created() {
+            // 递归循环添加id 层级
+            // this.departmentList.map((item,index) => {
+            //     item.id = 0;
+            //     item.children && this.checkChild(item.children,item.id);
+            // })
+        },
+        mounted() {
+            // 获取tag宽度的盒子
+            this.taglabel = document.querySelector('.department-select .el-select__tags')
+        },
+        methods: {
+            // 和created函数内配合递归循环创建数据层级id
+            // checkChild(child,parentId) {
+            //     child.map((item,index) => {
+            //         item.id = parentId+ 1;
+            //         item.children && this.checkChild(item.children,item.id);
+            //     })
+            // },
+            // 点击选项添加数据
+            change (val, value, index) {
+                // 获取数据内的层级id
+                let id =val.id
+                // 提前创建好二维数组防止报错，后面会进行空数组的清空操作
+                this.all.push([])
+                this.all[this.num].splice(id, 0, val)
+                // 用户点击之后是否有子数据，有的话加入arr渲染子数据，开启限制
+                if(val.children) {
+                    this.arr.push(val)
+                    this.istrue = true
+                }
+                // 提前创建盛放已选内容的二维数组，功能和all一样
+                this.value.push([])
+                this.value[this.num].splice(id, 1 , { value, id, num: this.num })
+
+                // this.selectArr.splice(this.num,1, [this.value[this.num][this.value[this.num].length-1]])
+                // 存储每个已选的最后一位作为tag
+                console.log(this.value[this.num].splice(id, 1 , { value, id, num: this.num }))
+                console.log(this.value[this.num][this.value[this.num].length-1].value)
+                setTimeout(() => {
+                    this.selectArr.splice(this.num, 1, this.value[this.num][this.value[this.num].length-1].value)
+                }, 1000);
+               
+            },
+            // 点击已选值其中一个进行删除赋值
+            goBack (findex, oindex) {
+                // 过滤已选值数组，删掉选中的值
+                this.value[findex] = this.value[findex].filter((item, i) => i < oindex);
+                // 将存储好要展示的数组赋给arr渲染
+                this.filterAllSelect()
+                this.arr = this.all[findex]
+                // 过滤用户删除要显示的下层的选项
+                this.arr = this.arr.filter((item, i) => i < oindex);
+                // 是不是有选中值，有替换，无删除
+                if (this.value[findex][this.value[findex].length-1]) {
+                    this.selectArr.splice(findex,1,this.value[findex][this.value[findex].length-1].value)
+                }
+                // 开启展示第一层
+                this.istrue = true
+                // 如果删除的选项为第一层，清除相应数据盒子，赋予下一次添加位置下标
+                if (oindex===0) {
+                    this.clearArr(findex)
+                    this.filterArr()
+                    this.num = this.value.length
+                }else {
+                    // 直接赋予下标
+                    this.num = findex
+                }
+            },
+            // 点击已选小叉号清除所有选项
+            clear (findex) {
+                this.clearArr(findex)
+                this.filterArr()
+                this.arr = []
+                this.filterAllSelect()
+                this.num = this.value.length
+            },
+            // 点击部门跳转显示第一层选项，赋给下标
+            selectDepartment () {
+                this.filterArr()
+                this.istrue = false
+                this.num = this.value.length
+            },
+            // 删除当前下标的已选值，所有显示的选项，以及tag
+            clearArr (findex) {
+                this.value.splice(findex, 1, [])
+                this.all.splice(findex, 1, [])
+                this.selectArr.splice(findex,1)
+            },
+            // 过滤已选值的空数组，除去影响值位置的放置
+            filterArr() {
+                this.value = this.value.filter((item) => {
+                    if(item.length > 0) {
+                        return item
+                    }
+                })
+            },
+            // 过滤渲染展示的选项
+            filterAllSelect () {
+                this.all = this.all.filter((item) => {
+                    if(item.length > 0) {
+                        return item
+                    }
+                })
+            },
+            // 删除tag，删除已选
+            deleteTag(tag) {
+                this.selectArr.forEach((el, i) => {
+                    if (el === tag) {
+                        this.selectArr.splice(i,1)
+                        this.clear(i)
+                        return false
+                    }
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./promit.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<style>
+    .box {
+        width: 300px;
+    }
+    .el-input__inner {
+        width: 280px;
+    }
+    .el-popover,.data {
+        width: 320px;
+    }
+    .data {
+    }
+    .qwe {
+        display : flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .qwe div {
+        cursor: pointer;
+        width: 100px;
+        text-align: center;
+        line-height: 30px;
+    }
+    .span::before {
+        content: "-";
+    }
+    .vv-box {
+        position: relative;
+        width: auto;
+        display: inline;
+        color: #5b5b5b;
+        font-size: 12px;
+        padding-left: 20px;
+    }
+    .vv-box span {
+        cursor: pointer;
+        position: relative;
+        line-height: 25px;
+    }
+    .vv {
+        position: absolute;
+        right: -20px;
+        top: 2px;
+    }
+    .tags {
+        width: 280px;
+        height: 30px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        border: 1px solid #e7e7e7;
+    }
+    .tags:hover {
+        border-color: #4cd964;
+    }
+    .box {
+        position: relative;
+    }
+    .select-box {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .el-tag {
+        background-color: #f9f9f9;
+        border-color: #d4d3d8;
+        height: 20px;
+        line-height: 20px;
+        border-radius: 0;
+        color: #5b5b5b;
+        margin: 4px 0 0 4px;
+        padding: 0 8px;
+    }
+    .el-tag  .el-icon-error {
+        padding: 0 0 0 8px;
+        cursor: pointer;
+    }
+    .father {
+        position: relative;
+    }
+
+    /****/
+    .select-width,.select-width.el-select-dropdown__wrap {
+        width: 290px !important;
+        padding-bottom: 10px;
+    }
+    .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+        color: #606266;
+        font-weight: normal;
+    }
+    .el-select-dropdown__item {
+        width: auto !important;
+        font-size: 12px;
+    }
+    .el-select-dropdown__item::after {
+        color: #ffffff !important;
+    }
+    .department-select {
+        display: inline-block;
+        position: relative;
+    }
+    .department-select .el-select {
+        width: 280px;
+    }
+    .select {
+        width: 320px;
+    }
+    .department-select .el-input__inner, .department-select .el-input__icon {
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+    .department-select .el-tag__close {
+        margin-right: 5px !important;
+    }
+    .el-select .el-tag__close.el-icon-close {
+        top: -2px !important;
+        background-color: #999999;
+    }
+    .department-select .point {
+        position: absolute;
+        width: 30px;
+        height: 10px;
+        background: #ffffff;
+        right: 3px;
+        top: 50%;
+        margin-top: -5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    .department-select .el-select__tags span{
+        overflow: hidden !important;
+        height: 20px !important;
+        line-height: 20px !important;
+    }
+    .department-select .el-select__tags span span {
+        float: left;
+    }
+    .department-select .el-input__inner {
+        border-radius: 0;
+        border-color: #b1b1b1;
+    }
+    .department-select .el-select .el-input.is-focus .el-input__inner,.department-select .el-select .el-input__inner:focus {
+        border-color: #b1b1b1 !important;
+    }
+    .select-box .title {
+        font-size: 12px;
+        padding: 8px 0 0 10px;
+    }
+    .select-box .select-data {
+        min-height: 40px;
+    }
+    .select-box .select-data div {
+        padding: 10px 10px;
+    }
+    .select-box .el-icon-error {
+        position: absolute;
+        right: -20px;
+        top: 3px;
+        color: #999999;
+        cursor: pointer;
+    }
+    .select-box .add-department {
+        color: #21b08d;
+        font-size: 12px;
+        cursor: pointer;
+        text-align: center;
+        padding: 10px 0;
+    }
+    ul,li {
+        list-style: none;
+        padding: 0;
+    }
+    /* 设置部门选择项间距 */
+    .spacing {
+        min-width: 52px;
+        float: left;
+        padding: 6px 10px;
+        cursor: pointer;
+        text-align: center;
+    }
+    .spacing:hover {
+        background-color: #f5f7fa;
+    }
+    /*.select-value {*/
+        /*padding: 10px 0 8px 0;*/
+    /*}*/
+    .el-select-dropdown__item {
+        float: left;
+        text-align: center !important;
+        padding: 0 0 0 0  !important;
+        margin: 0 2px 0 10px  !important;
+        line-height: 30px !important;
+        height: 30px;
+    }
+    .el-select-dropdown__item:nth-child(1) {
+        margin-left: 0 !important;
+    }
+    .el-select-dropdown__item div {
+        min-width: 62px;
+    }
+    /*.select-value .el-select-dropdown__item div {*/
+        /*width: 100%;*/
+    /*}*/
+    .demplate-pad {
+        padding-bottom: 8px;
+    }
+    .department-select .round-box {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #12ab8c;
+    }
+    .el-select__tags {
+        max-width: 245px !important;
+    }
+    .select-width .el-scrollbar__wrap {
+        width: 100%;
+        overflow-y: hidden !important;
+    }
+    .select-width .el-select-dropdown__wrap {
+        height: 100%;
+    }
+    .select-width .plus {
+        font-size: 17px !important;
+    }
+    .department-select .el-tag {
+        padding: 0 4px;
+        border-color: #d0d4da;
+        margin: 0 0 1px 4px;
+        background-color: #f7f7f7;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="box">
+        <div class="department-select">
+            <el-select v-model="valueData" placeholder="请选择部门" multiple popper-class="select-width" @remove-tag="deleteTag">
+                <div class="select-box">
+                    <div class="title">已选：</div>
+                    <div class="select-box" style="width: 100%; min-height: 20px;padding-top: 15px">
+                        <span v-for="(oitem, findex) in value" class="vv-box" :key="findex">
+                            <span v-for="(txt, oindex) in oitem" :class="oindex> 0?'span': ''" @click="goBack(findex,oindex)" :key="txt.value">
+                            {{txt.value}}
+                                <i class="el-icon-error vv" v-if="oindex === oitem.length -1" @click.stop="clear(findex)"></i>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="demplate-pad">
+                        <div @click="selectDepartment" style="padding: 0 10px 20px 0;text-align: center;border-bottom: 1px solid #e7e7e7; color: #12ab8d;font-size: 12px;cursor: pointer;">
+                            <span class="plus">+</span><span>选择部门</span>
+                        </div>
+                    </div>
+                </div>
+                <el-option v-for="(item, index) in arr.length > 0 && istrue ? arr[arr.length-1].children  : departmentList"
+                           :key="item.value"
+                           :label="item.value"
+                           :value="item.value">
+                    <div @click="change(item,item.value,index)">{{item.value}}</div>
+                </el-option>
+            </el-select>
+            <div class="point el-input__suffix" v-if="tagWidth > 240">
+                <span class="round-box" v-for="item in 3" :key="item"></span>
+            </div>
+        </div>
+    </div>
+    <!--正编写的-->
+    <!--<div class="original-box">-->
+        <!--<div class="original-input-box">-->
+            <!--&lt;!&ndash;<div class="original-input original-input__suffix">&ndash;&gt;-->
+                <!--<input type="text" placeholder="请输入部门" class="original-el-input__inner">-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<div class="original-input__suffix">-->
+                <!--<span class="original-input__suffix-inner">-->
+                    <!--<i slot="suffix" class="el-select__caret original-input__icon el-icon-arrow-up is-reverse"></i>-->
+                <!--</span>-->
+            <!--</div>-->
+            <!--<div class="original-down" v-if="">-->
+                <!--<div class="original-down-item">-->
+                    <!--<span class="popper_arrow"></span>-->
+                    <!--<span class="popper_fool"></span>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            arr: [],
+            value: [],
+            num: 0,
+            departmentList: [ // 部门数据
+                {
+                    value: '置业部',
+                    label: '置业部',
+                    children: [
+                        {
+                            value: '唐山市区',
+                            children: [
+                                {
+                                    value: 'A区',
+                                    children: [
+                                        {
+                                            value: '新一中店'
+                                        }
+                                    ]
+                                },
+                                {
+                                    value: 'B区',
+                                    children: [
+                                        {
+                                            value: '新二中店'
+                                        }
+                                    ]
+                                },
+                                {
+                                    value: 'C区',
+                                    children: [
+                                        {
+                                            value: '新三中店'
+                                        }
+                                    ]
+                                },
+                            ]
+                        },
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '人资部',
+                    label: '人资部',
+                    children: [
+                        { value: '滦县区'},
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '权证部',
+                    label: '权证部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区'}
+                    ]
+                },
+                {
+                    value: '行政部',
+                    label: '行政部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '网络部',
+                    label: '网络部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '宣传部',
+                    label: '宣传部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '市场部',
+                    label: '市场部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                },
+                {
+                    value: '培训部',
+                    label: '培训部',
+                    children: [
+                        { value: '滦县区' },
+                        { value: '滦南区' }
+                    ]
+                }
+            ],
+            istrue: false,
+            all: [],
+            selectArr: [],
+            taglabel: '',
+            tagWidth: 0
+        },
+        computed: {
+            valueData () {
+                let computeArr
+                    computeArr = this.selectArr.map((item) => { return item })
+           
+            
+                // 拿到选项的宽度出现三个绿色小点计算
+                this.$nextTick(() => {
+                    setTimeout(() => {
+                        this.tagWidth = this.taglabel.offsetWidth
+                    }, 100)
+                })
+                // 返回用户选择的新数组
+                return computeArr
+            }
+        },
+        created() {
+            // 递归循环添加id 层级
+            // this.departmentList.map((item,index) => {
+            //     item.id = 0;
+            //     item.children && this.checkChild(item.children,item.id);
+            // })
+        },
+        mounted() {
+            // 获取tag宽度的盒子
+            this.taglabel = document.querySelector('.department-select .el-select__tags')
+        },
+        methods: {
+            // 和created函数内配合递归循环创建数据层级id
+            // checkChild(child,parentId) {
+            //     child.map((item,index) => {
+            //         item.id = parentId+ 1;
+            //         item.children && this.checkChild(item.children,item.id);
+            //     })
+            // },
+            // 点击选项添加数据
+            change (val, value, index) {
+                // 获取数据内的层级id
+                let id =val.id
+                // 提前创建好二维数组防止报错，后面会进行空数组的清空操作
+                this.all.push([])
+                this.all[this.num].splice(id, 0, val)
+                // 用户点击之后是否有子数据，有的话加入arr渲染子数据，开启限制
+                if(val.children) {
+                    this.arr.push(val)
+                    this.istrue = true
+                }
+                // 提前创建盛放已选内容的二维数组，功能和all一样
+                this.value.push([])
+                this.value[this.num].splice(id, 1 , { value, id, num: this.num })
+
+                // this.selectArr.splice(this.num,1, [this.value[this.num][this.value[this.num].length-1]])
+                // 存储每个已选的最后一位作为tag
+                console.log(this.value[this.num].splice(id, 1 , { value, id, num: this.num }))
+                console.log(this.value[this.num][this.value[this.num].length-1].value)
+                setTimeout(() => {
+                    this.selectArr.splice(this.num, 1, this.value[this.num][this.value[this.num].length-1].value)
+                }, 1000);
+               
+            },
+            // 点击已选值其中一个进行删除赋值
+            goBack (findex, oindex) {
+                // 过滤已选值数组，删掉选中的值
+                this.value[findex] = this.value[findex].filter((item, i) => i < oindex);
+                // 将存储好要展示的数组赋给arr渲染
+                this.filterAllSelect()
+                this.arr = this.all[findex]
+                // 过滤用户删除要显示的下层的选项
+                this.arr = this.arr.filter((item, i) => i < oindex);
+                // 是不是有选中值，有替换，无删除
+                if (this.value[findex][this.value[findex].length-1]) {
+                    this.selectArr.splice(findex,1,this.value[findex][this.value[findex].length-1].value)
+                }
+                // 开启展示第一层
+                this.istrue = true
+                // 如果删除的选项为第一层，清除相应数据盒子，赋予下一次添加位置下标
+                if (oindex===0) {
+                    this.clearArr(findex)
+                    this.filterArr()
+                    this.num = this.value.length
+                }else {
+                    // 直接赋予下标
+                    this.num = findex
+                }
+            },
+            // 点击已选小叉号清除所有选项
+            clear (findex) {
+                this.clearArr(findex)
+                this.filterArr()
+                this.arr = []
+                this.filterAllSelect()
+                this.num = this.value.length
+            },
+            // 点击部门跳转显示第一层选项，赋给下标
+            selectDepartment () {
+                this.filterArr()
+                this.istrue = false
+                this.num = this.value.length
+            },
+            // 删除当前下标的已选值，所有显示的选项，以及tag
+            clearArr (findex) {
+                this.value.splice(findex, 1, [])
+                this.all.splice(findex, 1, [])
+                this.selectArr.splice(findex,1)
+            },
+            // 过滤已选值的空数组，除去影响值位置的放置
+            filterArr() {
+                this.value = this.value.filter((item) => {
+                    if(item.length > 0) {
+                        return item
+                    }
+                })
+            },
+            // 过滤渲染展示的选项
+            filterAllSelect () {
+                this.all = this.all.filter((item) => {
+                    if(item.length > 0) {
+                        return item
+                    }
+                })
+            },
+            // 删除tag，删除已选
+            deleteTag(tag) {
+                this.selectArr.forEach((el, i) => {
+                    if (el === tag) {
+                        this.selectArr.splice(i,1)
+                        this.clear(i)
+                        return false
+                    }
+                })
+            }
+        }
+    })
+</script>
+</body>
+</html>

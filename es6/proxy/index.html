@@ -6,6 +6,16 @@
   <title>Page Title</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
+    var obj = new Proxy({}, {
+      get: function (target, key, receiver) {
+        console.log(`getting ${key}`);
+        return Reflect.get(target, key, receiver)
+      },
+      set: function (target, key, value, receiver) {
+        return Reflect.set(target, key, value, receiver)
+      }
+    })
+
     var person = {
       name: "张三"
     };
@@ -15,13 +25,23 @@
         if (property in target) {
           return target[property];
         } else {
-          throw new ReferenceError("")
+          throw new ReferenceError(`${property} does not exitst.`)
         }
       }
     });
-
     proxy.name
     proxy.age
+
+
+    let proto = new Proxy({}, {
+      get(target, propertyKey, receiver) {
+        console.log('GET' + propertyKey);
+        return target[propertyKey]
+      }
+    });
+    let obj = Object.create(proto);
+    obj.foo // "GET foo"
+    // 拦截操作定义在Prototype对象上面，所以如果读取obj对象继承的属性时，拦截会生效
 
   </script>
 </head>

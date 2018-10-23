@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取地理位置</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=nXqzDZvK6Ve9DttwerEqzIR2KZhNW23h"></script>
+</head>
+<body>
+<div id="tangshan"></div>
+<script>
+    var map = new BMap.Map("tangshan"); // 创建map实例
+    map.centerAndZoom(new BMap.Point(118.188188,39.631028),17); //初始化地图，设置中心的坐标和地图级别
+
+    // 添加地图类型控件
+    map.addControl(new BMap.MapTypeControl({
+        mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]
+    }));
+    map.setCurrentCity("唐山");
+    map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
+    // 点击地图并在此添加标记
+//    map.addEventListener("click",function (e) { // 鼠标单击地图触发
+//        if(time>=1){
+//            return;
+//        }else{
+//            popLayer(e)
+//        }
+//    })
+</script>
+</body>
+</html>

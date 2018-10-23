@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>作业</title>
+  <meta charset="utf-8">
+  <style>
+    .square {
+      color: #fff;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      background-color: #c685d9;
+      transform: rotate(45deg);
+      margin: 50px
+    }
+
+    .rhombus {
+      color: #fff;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      background: #6791AF;
+      transform: skewX(20deg)
+    }
+
+    .trapezoid {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 100px;
+      border: 1px solid #FFFF33;
+      background: #E16912
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="square">正方形旋转45度</div>
+    <div class="rhombus">非正方形菱形</div>
+    <div class="trapezoid"></div>
+  </div>
+  <script>
+    let move = document.querySelector('.trapezoid'),
+     bodyHeight = document.documentElement.scrollHeight,
+     bodyWidth = document.documentElement.clientWidth,
+     left = move.offsetLeft,
+     height = move.offsetHeight,
+     countX=0, countY = 0,
+     directX=1, directY = 1
+    setInterval(() => {
+      countX += directX
+      countY += directY
+      if (countX + move.offsetWidth >= bodyWidth||countX<0) {
+        directX = -directX
+      }
+      if (countY + move.offsetHeight >= bodyHeight||countY<0) {
+        directY = -directY
+      }
+      move.style.left = countX + 'px'
+      console.log(countX, '1')
+      move.style.top = countY + 'px'
+      console.log(countY, '2')
+    }, 0)
+  </script>
+</body>
+
+</html>

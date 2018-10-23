@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今天中午吃什么？</title>
+    <style>
+        #type{
+            height:30px;
+        }
+        #end{
+            display: none;
+        }
+    </style>
+    <script>
+window.onload=function (){
+    let start = document.getElementById('start');
+    let end = document.getElementById('end');
+    let timer;
+    end.style.display ='none';
+    start.onclick=function () {
+            end.style.display ='block';
+            start.style.display = 'none';
+            let c= ['粗粮细作','三宝馄饨','犟大骨','粮食焗','杨国福','孔明包','成都美食','饿魔公社','霸气炒饭醉小胖','黄焖鸡'];
+            timer =   setInterval(function(){
+                let length = Math.ceil(Math.random()*c.length);
+                let food = c[length -1];
+                document.getElementById('type').innerHTML=food
+            },1)
+    };
+end.onclick=function () {
+    end.style.display ='none';
+    start.style.display = 'block';
+            clearInterval(timer)
+    };
+};
+    </script>
+</head>
+<body>
+<div style="width:100%;text-align: center;margin-top:100px;font-size: 20px">
+    <div id="type">今天中午吃什么</div>
+    <div id="start" style="background:#12ab8d;color:#fff;margin:auto;width:100px;height:30px;line-height: 30px;border-radius: 10px">
+        start
+    </div>
+    <div id="end" style="background:#12ab8d;color:#fff;margin:auto;width:100px;height:30px;line-height: 30px;border-radius: 10px">
+        end
+    </div>
+</div>
+</body>
+</html>

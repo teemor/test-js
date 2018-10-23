@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/vue/2.4.2/vue.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<style>
+  #app{
+    position: relative;
+    /* padding:0 50px; */
+  }
+    .box {
+        /* padding: 0 42px; */
+        position: absolute;
+        clear: both;
+        zoom: 1;
+        margin-top:186px;
+        display: flex;
+        /* padding: 120px 0 0 0; */
+        width: 100%;
+        white-space: nowrap;
+    }
+    .gh{float: left;}
+    .height .cell {
+        height: 60px !important;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .el-table .el-table--border th,  .el-table--border td,  .el-table th.is-leaf , .el-table td,.el-table--border th {
+        border-color: #dadadc;
+        box-sizing: border-box;
+    }
+    .el-table--fit {
+        border: 1px solid #dadadc;
+        border-bottom: none;
+    }
+    .el-table__header-wrapper .th-width > .cell,.el-table__header-wrapper .data-analysis > .cell {
+        width: 40px;
+    }
+    .el-table__header-wrapper .data-analysis {
+        border-bottom: 1px solid #f7f7f7 !important;
+    }
+
+    .el-table th, .el-table td{
+        padding: 0
+    }
+    .el-table{
+        font-size:10px;
+        font-weight: 0 !important
+    }
+    .el-table .has-gutter .cell{
+        line-height: 15px;padding-left:14px;
+    }
+    .el-table--group, .el-table--border {
+        border-color: #dadadc;
+    }
+    .el-table--border, .border-lt {
+        border-left:0px solid #dadadc; border-right:0px solid #dadadc;
+    }
+    .el-table__body-wrapper .el-table__body{
+        /*overflow-x: scroll;*/
+
+    }
+    .el-table__header-wrapper{
+        position: fixed;
+        top: 0;
+        z-index: 99;
+    }
+    .box {
+        /*position: relative;*/
+    }
+    .header-color {
+        background-color: #f7f7f7 !important;
+        font-weight: bold;
+        color: #595959;
+    }
+    .header-color > .cell {
+        padding: 0 !important;
+    }
+    .cell-padding > .cell {
+        padding: 12px 0;
+        text-align: center;
+    }
+</style>
+<body>
+<div id="app">
+    <div class="box">
+          <div v-for="(item, index) in list.data" :key="index" style="display: inline-block;">
+              <el-table :data="item.model" :header-cell-style="getClass"  :header-cell-style="{background: item.header[0].background}" cell-class-name="height" style="float: left">
+                  <template v-for="column in item.header">
+                      <el-table-column v-if="column.label==='日期'" :key="column.data" :prop="column.data" align="center" :label="column.label" :width="155">
+                      </el-table-column>
+                      <el-table-column v-else-if="column.label==='基本信息'" :key="column.data" :prop="column.data" align="center" :label="column.label">
+                          <template v-for="item in column.headerSecond">
+                              <el-table-column  :prop="item.data" :width="62" :key="item.data" align="center" :label="item.label">
+                              </el-table-column>
+                          </template>
+                      </el-table-column>
+                      <el-table-column :width="40" v-else :key="column.data" :prop="column.data" align="center" :label="column.label" :class-name="column.data==='analysis'?'data-analysis':''" >
+                          <template v-for="item in column.headerSecond">
+                              <el-table-column sortable :prop="item.data" :key="item.data" align="center" :label="item.label" :width="40">
+                              </el-table-column>
+                          </template>
+                      </el-table-column>
+                  </template>
+              </el-table>
+          </div>
+      </div>    
+</div>
+</body>
+<script>
+    var timer = null;
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                list: {
+                    "data": [{
+                        "header": [{
+                            "label": "日期",
+                            "data": "date",
+                            "background": "#F7F7F7"
+                        }],
+                        "model": [{
+                            "date": "2018.08.01-2018.08.31"
+                        },
+                            {
+                                "date": "2018.08.01-2018.08.31"
+                            },{
+                                "date": "2018.08.01-2018.08.31"
+                            },
+                            {
+                                "date": "2018.08.01-2018.08.31"
+                            },
+                            {
+                                "date": "2018.08.01-2018.08.31"
+                            },
+                            {
+                                "date": "2018.08.01-2018.08.31"
+                            },
+                            {
+                                "date": "2018.08.01-2018.08.31"
+                            }, {
+                                "date": "2018.08.01-2018.08.31"
+                            }, {
+                                "date": "2018.08.01-2018.08.31"
+                            }, {
+                                "date": "2018.08.01-2018.08.31"
+                            }, {
+                                "date": "2018.08.01-2018.08.31"
+                            }
+                        ]
+                    },
+                        {
+                            "header": [{
+                                "label": "基本信息",
+                                "data": "基本信息",
+                                "background": "#E8F3EB",
+                                "headerSecond": [{
+                                    "label": "部门",
+                                    "data": "department"
+                                },
+                                    {
+                                        "label": "组",
+                                        "data": "part"
+                                    },
+                                    {
+                                        "label": "邀约人",
+                                        "data": "InvitingPerson"
+                                    }
+                                ]
+                            }],
+                            "model": [{
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            },{
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }, {
+                                "department": "置业部",
+                                "part": "A组",
+                                "InvitingPerson": "王某某"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "出勤情况",
+                                "data": "Attendance",
+                                "background": "#FEF0EF",
+                                "headerSecond": [{
+                                    "label": "应出勤天数",
+                                    "data": "Attendays"
+                                },
+                                    {
+                                        "label": "业务出勤天数",
+                                        "data": "businessDay"
+                                    },
+                                    {
+                                        "label": "活动出勤天数",
+                                        "data": "Activitydays"
+                                    },
+                                    {
+                                        "label": "未出勤天数",
+                                        "data": "NotAttendace"
+                                    }
+                                ]
+                            }],
+                            "model": [ {
+                                "Attendays": "31",
+                                "businessDay": "25",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "21",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            },{
+                                "Attendays": "31",
+                                "businessDay": "25",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "21",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "23",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "25",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "15",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "02",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "25",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "30",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }, {
+                                "Attendays": "31",
+                                "businessDay": "25",
+                                "Activitydays": "3",
+                                "NotAttendace": "3"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "电话量",
+                                "data": "电话量",
+                                "background": "#F4F2E3",
+                                "headerSecond": [{
+                                    "label": "电话个数",
+                                    "data": "callnum"
+                                },
+                                    {
+                                        "label": "电话时长",
+                                        "data": "callduration"
+                                    },
+                                    {
+                                        "label": "联系人数",
+                                        "data": "invitors"
+                                    },
+                                    {
+                                        "label": "电话人均时长",
+                                        "data": "callperhour"
+                                    },
+                                    {
+                                        "label": "扣款数",
+                                        "data": "numberDeduction"
+                                    }
+                                ]
+                            }],
+                            "model": [ {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }, {
+                                "callnum": "200",
+                                "callduration": "100",
+                                "invitors": "200",
+                                "callperhour": "0.5",
+                                "numberDeduction": "200"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "简历系统",
+                                "data": "简历系统",
+                                "background": "#E4EFF5",
+                                "headerSecond": [{
+                                    "label": "意向简历数",
+                                    "data": "ResumeNum"
+                                },
+                                    {
+                                        "label": "信息采集量",
+                                        "data": "InformationCollection"
+                                    },
+                                    {
+                                        "label": "新增简历数",
+                                        "data": "AddResumeNum"
+                                    },
+                                    {
+                                        "label": "跟进量",
+                                        "data": "followUpNum"
+                                    }
+                                ]
+                            }],
+                            "model": [{
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            },{
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }, {
+                                "ResumeNum": "300",
+                                "InformationCollection": "100",
+                                "AddResumeNum": "50",
+                                "followUpNum": "1"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "预约面试",
+                                "data": "预约面试",
+                                "background": "#E4E8F4",
+                                "headerSecond": [{
+                                    "label": "预约人数",
+                                    "data": "预约人数"
+                                },
+                                    {
+                                        "label": "预约实到人数",
+                                        "data": "预约实到人数"
+                                    },
+                                    {
+                                        "label": "中途立场数",
+                                        "data": "中途立场数"
+                                    },
+                                    {
+                                        "label": "参加面试数",
+                                        "data": "参加面试数"
+                                    },
+                                    {
+                                        "label": "计划外人数",
+                                        "data": "计划外人数"
+                                    },
+                                    {
+                                        "label": "预约未到人数",
+                                        "data": "预约未到人数"
+                                    },
+                                    {
+                                        "label": "成功率",
+                                        "data": "成功率"
+                                    }
+                                ]
+                            }],
+                            "model": [ {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            },  {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            },  {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }, {
+                                "预约人数": "70",
+                                "预约实到人数": "70",
+                                "中途立场数": "70",
+                                "参加面试数": "70",
+                                "计划外人数": "70",
+                                "预约未到人数": "70",
+                                "成功率": "100%"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "初试",
+                                "data": "初试",
+                                "background": "#F4EBE2",
+                                "headerSecond": [{
+                                    "label": "初试通过人数",
+                                    "data": "初试通过人数"
+                                },
+                                    {
+                                        "label": "淘汰人数",
+                                        "data": "淘汰人数"
+                                    },
+                                    {
+                                        "label": "分加盟店人数",
+                                        "data": "分加盟店人数"
+                                    },
+                                    {
+                                        "label": "复试预约人数",
+                                        "data": "复试预约人数"
+                                    }
+                                ]
+                            }],
+                            "model": [{
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            },{
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }, {
+                                "初试通过人数": "70",
+                                "淘汰人数": "70",
+                                "分加盟店人数": "70",
+                                "复试预约人数": "70"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "复试",
+                                "data": "复试",
+                                "background": "#E7F4E3",
+                                "headerSecond": [{
+                                    "label": "复试实到人数",
+                                    "data": "复试实到人数"
+                                },
+                                    {
+                                        "label": "复试未到人数",
+                                        "data": "复试未到人数"
+                                    },
+                                    {
+                                        "label": "复试通过人数",
+                                        "data": "复试通过人数"
+                                    },
+                                    {
+                                        "label": "复试淘汰人数",
+                                        "data": "复试淘汰人数"
+                                    },
+                                    {
+                                        "label": "复试分加盟店人数",
+                                        "data": "复试分加盟店人数"
+                                    },
+                                    {
+                                        "label": "计划外复试数",
+                                        "data": "计划外复试数"
+                                    }
+                                ]
+                            }],
+                            "model": [{
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            },  {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }, {
+                                "复试实到人数": "70",
+                                "复试未到人数": "70",
+                                "复试通过人数": "70",
+                                "复试淘汰人数": "70",
+                                "复试分加盟店人数": "70",
+                                "计划外复试数": "288"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "培训、下店",
+                                "data": "培训、下店",
+                                "background": "#F4E2EE",
+                                "headerSecond": [{
+                                    "label": "入司1天人数",
+                                    "data": "入司1天人数"
+                                },
+                                    {
+                                        "label": "分直营店人数",
+                                        "data": "分直营店人数"
+                                    },
+                                    {
+                                        "label": "分加盟店人数",
+                                        "data": "分加盟店人数"
+                                    },
+                                    {
+                                        "label": "入司5天人数",
+                                        "data": "入司5天人数"
+                                    },
+                                    {
+                                        "label": "入司20天人数",
+                                        "data": "入司20天人数"
+                                    }
+                                ]
+                            }],
+                            "model": [ {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            },{
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            },{
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }, {
+                                "入司1天人数": "70",
+                                "分直营店人数": "70",
+                                "分加盟店人数": "70",
+                                "入司5天人数": "70",
+                                "入司20天人数": "670"
+                            }]
+                        },
+                        {
+                            "header": [{
+                                "label": "简历系统",
+                                "data": "system",
+                                "background": "#E4EFF5",
+                                "headerSecond": [{
+                                    "label": "信息采集量",
+                                    "data": "信息采集量"
+                                },
+                                    {
+                                        "label": "新增简历量比",
+                                        "data": "新增简历量比"
+                                    },
+                                    {
+                                        "label": "跟进量比",
+                                        "data": "跟进量比"
+                                    }
+                                ]
+                            }],
+                            "model": [{
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }, {
+                                "信息采集量": "100",
+                                "新增简历量比": "10/900",
+                                "跟进量比": "10/90"
+                            }]
+                        }
+                    ],
+                    "page": 1,
+                    "size": 5
+                }, // table 假数据
+                arr: [], // 表头宽
+                result: [], // 表头的left
+                initLeft: 0, // 移动的滚动条left值
+                initTop: 0, // 移动的滚动条top值
+                endLeft: 0, // 停止后滚动条left值
+                endTop: 0, // 停止后滚动条top值
+                isRefresh: false // 是否是第一次进入
+            }
+        },
+        mounted() {
+            setTimeout(() => {
+                this.domc()
+                this.isRefresh = true
+            }, 500)
+            window.addEventListener('scroll', this.handleScroll, true)
+            this.body = document.getElementsByClassName('el-table__body-wrapper')
+            this.header = document.getElementsByClassName('el-table__header-wrapper')
+        },
+        methods: {
+            getClass: function ({ row, column, rowIndex, columnIndex }) {
+                let height
+                if (row[rowIndex].label === '日期') {
+                    height = `195px`
+                } else if (row[rowIndex].label === '数据分析') {
+                    height = `750px`
+                } else if (rowIndex === 0) {
+                    height = `40px`
+                } else {
+                    height = `155px`
+                }
+                return `height:${height};`
+            },
+            domc () {
+                for (let i = 0; i < this.header.length; i++) {
+                  // 宽度
+                    this.arr.push({'width': this.body[i].scrollWidth})
+                    this.result = this.arr.reduce((pre, cur, index) => {
+                        console.log(cur.width)
+                        let sum = Object.keys(pre).length > 0 ? pre[index - 1] + 1 +cur.width : 8 + cur.width
+                        pre[index] = sum
+                        return pre
+                    }, {})
+                    let table = this.body[i].getElementsByTagName('table')
+                    // 第一列
+                    if(i === 0) {
+                        this.header[0].style.left = 8 + 'px'
+                        table[0].style.left = 8 + 'px'
+                    }
+                    // 除了第一列
+                    if (i > 0 ) {
+                        this.header[i].style.left = this.result[i - 1] + 'px'
+                                            // 除了前两列和最后一列
+                    // if (i>1&& i!==this.header.length-1){
+                    //   table[i].style.borderLeft = '1px solid #dadadc'
+                    // }
+
+                    }
+
+                    // 最后一列
+                    // if(i=this.header.length-1){
+                    //   // this.header[0].style.marginLeft = 50 + 'px'
+                    //   //   table[0].style.marginLeft = 50 + 'px'
+                    //   console.log(this.header[i])
+                    //   // this.header[i].right = 50 + 'px'
+                    // }
+                    // 前两列
+                    if(i <= 1) {
+                        table[0].style.position = 'fixed'
+                        table[0].style.zIndex = 100
+                        this.header[i].style.zIndex = 300
+                        table[0].style.left = this.result[i-1] + 'px'
+                        table[0].style.borderLeft = '1px solid #dadadc'
+                    }
+                }
+                this.body[2].getElementsByTagName('table')[0].style.marginLeft = 340 + 'px'
+            },
+            handleScroll () {
+                // 判断用户是否刷新了页面，刷新赋值
+                if(!this.isRefresh) {
+                    document.documentElement.scrollLeft = 0
+                    document.documentElement.scrollTop = 0
+                }
+                clearTimeout(timer) // 每次滚动前 清除一次
+                timer = setTimeout(this.Data, 800);
+                this.initLeft = document.documentElement.scrollLeft
+                this.initTop = document.documentElement.scrollTop
+                let headerHeight = document.getElementsByClassName('el-table__header-wrapper')[0].offsetHeight
+                for (let i = 0; i < this.header.length; i++) {
+                    // 横向滚动走的距离
+                    if (i > 1 ) {
+                        this.header[i].style.left = this.result[i - 1] - this.initLeft + 'px'
+                    }
+                    // 定位的前两个元素
+                    if(i<=1) {
+                        this.table = this.body[i].getElementsByTagName('table')
+                    }
+                    // 是否是横向滚动
+                    if(this.initLeft >  this.endLeft || this.initLeft <  this.endLeft) {
+                        this.table[0].style.position = 'fixed'
+                        // 保持被定位的左侧数据与移动的高度一致
+                        if(this.initTop > 0) {
+                            this.table[0].style.top = (headerHeight - this.initTop) + 'px'
+                        }
+                        this.body[0].getElementsByTagName('table')[0].style.marginLeft = 0 + 'px'
+                        this.body[2].getElementsByTagName('table')[0].style.marginLeft = 340 + 'px'
+                        // this.table[0].style.borderLeft = '1px solid #dadadc'
+                    }
+                    /*垂直滚动 */
+                    // (分为两种模式第一种，表头不恢复原位上下滚动)
+                    if(this.initTop > this.endTop || this.initTop < this.endTop) {
+                        this.table[0].style.top = (headerHeight-this.initTop) + 'px'
+                        // this.table[0].style.borderLeft = 'none'
+                    }
+                    // 第二种模式（移动垂直滚动条，表头恢复原位）
+                    // if(this.initTop > this.endTop || this.initTop < this.endTop) {
+                    //     this.table[0].style.position = 'static'
+                    //     this.body[2].getElementsByTagName('table')[0].style.marginLeft = 0 + 'px'
+                    //     this.body[0].getElementsByTagName('table')[0].style.marginLeft = this.initLeft + 'px'
+                    //     this.header[i].style.left = this.result[i - 1] + 'px'
+                    // }
+                }
+            },
+            // 滚动条停止滚动后存储上一次滚动的值
+            Data(){
+                this.endLeft = document.documentElement.scrollLeft;
+                this.endTop = document.documentElement.scrollTop;
+            }
+        }
+    })
+</script>
+</html>

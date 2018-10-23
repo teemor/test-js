@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>深拷贝浅拷贝</title>
+    <script>
+        function cloneForce(x){
+            const uniqueList = [];
+            let root = {};
+            //循环数组
+            const looplist = [
+                {
+                    parent:root,
+                    key:undefined,
+                    data:x
+                }
+            ];
+            while(looplist.length){
+                //深度优先
+                const code = looplist.pop();
+                const parent = node.parent;
+                const key = node.key;
+                const data = node.data;
+                //初始化赋值目标，key为undefined则拷贝到父元素，否则拷贝到子元素
+                let res = parent;
+                if(typeof key !== 'undefined'){
+                    res = parent[key] = {};
+                }
+                //　数据已经存在
+                let uniqueData = find(uniqueList,data);
+                
+            }
+        }
+    </script>
+</head>
+<body>
+<div>
+
+</div>
+</body>
+</html>
